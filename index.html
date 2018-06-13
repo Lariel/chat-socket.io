@@ -7,7 +7,7 @@
     <title>Chat Sistemas Distribuidos</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-lastest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     
     <style>
@@ -25,6 +25,10 @@
                     <h3>Usuários online</h3>
                     <ul class="list-group" id="users"></ul>
                 </div>
+                <div class="well">
+                        <h3>Meus contatos</h3>
+                        <ul class="list-group" id="users"></ul>
+                </div>
             </div>
 
             <div class="col-md-8"> <!-- de 12 do bootstrap -->
@@ -33,7 +37,7 @@
                 <form id="messageForm">
                     <div class="form-group">
                         <label>Digite a mensagem</label>
-                        <textarea class="form-control" id="mensage"></textarea>
+                        <textarea class="form-control" id="message"></textarea>
                         <br />
                         <input type="submit" class="btn btn-primary" value="Enviar Mensagem" />
                     </div>
@@ -41,7 +45,22 @@
             </div>
         </div>
     </div>
-        
+
+    <script>
+        $(function(){
+            var socket = io.connect();
+            var $messageForm = $('#messageForm');
+            var $message = $('#message');
+            var $chat = $('#chat');
+
+            $messageForm.submit(function(e){
+                e.preventDefault();
+                // console.log('teste ok');
+                socket.emit('send message', $message.val());
+                $message.val('');
+            });
+        });
+    </script>
     
 </body>
 </html>

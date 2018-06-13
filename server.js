@@ -9,14 +9,22 @@ server.listen(process.env.PORT || 3000);
 console.log('servidor rodando');
 
 app.get('/',function(req, res){
-    res.sendfile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/index.html');
 })
 
 io.sockets.on('connection', function(socket){
     connections.push(socket);
-    console.log('Conectados: %s clietes conectados', connections.length);
+    console.log('Conectados: %s clientes conectados', connections.length);
 
     // desconectados
-    connections.splice(connections.indexOf(socket),1);
-    console.log('Desconectados: %s clientes conectados', connections.length);
+    socket.on('disconnect', function(data){
+        connections.splice(connections.indexOf(socket),1);
+        console.log('Conectados: %s clientes conectados', connections.length);
+    });
+
+    // enviar mensagens
+    socket.on('send message', function(data){
+        console.log(data);
+        io.sockets.emit('new message', {msg: data}); 
+    });
 });
