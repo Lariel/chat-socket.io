@@ -1,0 +1,15 @@
+{
+  "name": "chat-sd",
+  "version": "1.0.0",
+  "description": "chat application for SD discipline",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lariel Negreiros dos Santos",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "*",
+    "express": "*"
+  }
+}
