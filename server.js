@@ -14,16 +14,19 @@ app.get('/',function(req, res){
 
 io.sockets.on('connection', function(socket){
     connections.push(socket);
-    console.log('Conectados: %s clientes conectados', connections.length);
+    console.log('Conectados: %s clientes conectados no servidor', connections.length);
+    console.log('Logados: %s clientes logados', users.length);
+    console.log('------------------------------------------');
 
     // desconectados
     socket.on('disconnect', function(data){
-        //if(!socket.username) return;
         users.splice(users.indexOf(socket.username), 1);
         updateUsernames();
 
         connections.splice(connections.indexOf(socket),1);
-        console.log('Conectados: %s clientes conectados', connections.length);
+        console.log('Conectados: %s clientes conectados no servidor', connections.length);
+        console.log('Logados: %s clientes logados', users.length);
+        console.log('------------------------------------------');
     });
 
     // enviar mensagens
@@ -32,7 +35,7 @@ io.sockets.on('connection', function(socket){
         io.sockets.emit('new message', {msg: data, user: socket.username}); 
     });
 
-    // novo usuário
+    // Sign Up e Log In
     socket.on('new user', function(data, callback){
         callback(true);
         socket.username = data;
@@ -44,6 +47,9 @@ io.sockets.on('connection', function(socket){
 
     function updateUsernames() {
         io.sockets.emit('get users', users);
+        console.log('Conectados: %s clientes conectados no servidor', connections.length);
+        console.log('Logados: %s clientes logados', users.length);
+        console.log('------------------------------------------');
     }
 
 });
