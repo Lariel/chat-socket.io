@@ -1,0 +1,19 @@
+body{
+    margin-top: 30px;
+}
+
+/*IDs*/
+#conversa{
+    display: none;
+}
+
+#userFormArea{
+    display: none;
+}
+
+/*Classes*/
+
+
+/* <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="UTF-8">  */
+
+

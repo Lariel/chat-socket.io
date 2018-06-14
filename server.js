@@ -6,7 +6,7 @@ users = [];
 connections = [];
 
 server.listen(process.env.PORT || 3000);
-console.log('servidor rodando');
+console.log('servidor rodando...');
 
 app.get('/',function(req, res){
     res.sendFile(__dirname + '/index.html');
@@ -39,6 +39,8 @@ io.sockets.on('connection', function(socket){
         users.push(socket.username);
         updateUsernames();
     });
+
+    // login
 
     function updateUsernames() {
         io.sockets.emit('get users', users);

@@ -7,6 +7,8 @@
     <title>Chat Sistemas Distribuidos</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Lariel/chatrmi/Dev/src/img/WhatsLike.png" />
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     
@@ -14,7 +16,6 @@
         body{
             margin-top: 30px;
         }
-
         #conversa{
             display: none;
         }
@@ -30,6 +31,9 @@
                             <div class="form-group">
                                 <label>Informe seu nickname</label>
                                 <input class="form-control" id="username"/>
+                                <br />
+                                <label>Informe seu e-mail</label>
+                                <input class="form-control" id="useremail"/>
                                 <br />
                                 <input type="submit" class="btn btn-primary" value="Login" />
                             </div>
@@ -47,6 +51,10 @@
                 <div class="well">
                         <h3>Meus contatos</h3>
                         <ul class="list-group" id="users"></ul>
+                </div>
+                <div class="well">
+                    <h3>Meus grupos</h3>
+                    <ul class="list-group" id="users"></ul>
                 </div>
             </div>
 
@@ -76,7 +84,6 @@
             var $userForm = $('#userForm');
             var $users = $('#users');
             var $username = $('#username');
-
             //envia mensagem
             $messageForm.submit(function(e){
                 e.preventDefault();
@@ -84,7 +91,6 @@
                 socket.emit('send message', $message.val());
                 $message.val('');
             });
-
             //add mensagens no chat
             socket.on('new message', function (data){
                 $chat.append('<div class="well"><strong>'+data.user+'</strong>: '+data.msg+'</div>');
@@ -101,10 +107,8 @@
                 });
                 $username.val('');
             });
-
             socket.on('get users', function(data){
                 var html = '';
-
                 for(i=0;i<data.length;i++){
                     html += '<li class="list-group-item">'+data[i]+'</li>';
                 }
