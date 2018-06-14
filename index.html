@@ -6,9 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WhatsLike</title>
 
+   
+    <link rel="stylesheet" href="css/styles.css" type="css" media="screen" charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,600,700">
+
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Lariel/chatrmi/Dev/src/img/WhatsLike.png" />
 
+    <!-- <script src="app.js" type="text/javascript" charset="UTF-8"></script> -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     
@@ -16,29 +21,120 @@
         body{
             margin-top: 30px;
         }
-        #conversa{
-            display: none;
+
+        #userLoginArea{
+           display: none;
         }
+        
+        #conversa{
+           display: none;
+        }
+
+        /*tentar incluir este trecho no styles.css */
+
+input, button {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+}
+
+.main-div, .loggedin-div {
+  min-width: 70%;
+  margin: 0px auto;
+  margin-top: 50px;
+  padding: 20px;
+  display: none;
+}
+
+.main-div input {
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  padding: 15px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 20px;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+}
+
+.main-div input:focus {
+  border: 1px solid #777;
+}
+
+.main-div button, .loggedin-div button {
+  background: #5d8ffc;
+  color: #fff;
+  border: 1px solid #5d8ffc;
+  border-radius: 5px;
+  padding: 15px;
+  display: block;
+  width: 100%;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+}
+
+.main-div button:hover, .loggedin-div button:hover {
+  background: #fff;
+  color: #5d8ffc;
+  border: 1px solid #5d8ffc;
+  cursor: pointer;
+}
+        /*tentar incluir este trecho no styles.css */
+
+
     </style>
 
 </head>
-<body>
-    <div class="container"> 
 
-        <div id="userFormArea" class="row"> <!-- form de log in -->
-                <div class="col-md-12">  <!-- bootstrap -->
-                    <form id="userForm">
-                            <div class="form-group">
-                                <label>Informe seu nickname</label>
-                                <input class="form-control" id="username"/>
-                                <br />
-                                <label>Informe seu e-mail</label>
-                                <input class="form-control" id="useremail"/>
-                                <br />
-                                <input type="submit" class="btn btn-primary" value="Login" />
-                            </div>
-                    </form>
-                </div> 
+
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDiXcyzs2EeXLfAsCbWkxhalxqrT-IXxG0",
+    authDomain: "chat-socket-io.firebaseapp.com",
+    databaseURL: "https://chat-socket-io.firebaseio.com",
+    projectId: "chat-socket-io",
+    storageBucket: "chat-socket-io.appspot.com",
+    messagingSenderId: "391959127375"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
+<body>
+    <div class="container">
+
+        <div id="login_div" class="main-div">
+            <h3>WhatsLike Login</h3>
+            <input type="email" placeholder="e-mail" id="email_field" />
+            <input type="password" placeholder="senha" id="password_field" />
+            <button onclick="login()">Login</button>
+            
+        </div>
+                
+        <div id="user_div" class="loggedin-div">
+            <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
+            <button onclick="logout()">Logout</button>
+        </div>
+
+        <div id="userLoginArea" class="row"> <!-- form de log in -->
+            <div class="col-md-12">  <!-- bootstrap -->
+                <form id="userLoginForm">
+                        <div class="form-group">
+                            <label>Informe seu nickname</label>
+                            <input class="form-control" id="username"/>
+                            <br />
+                            <label>Informe seu e-mail</label>
+                            <input class="form-control" id="useremail"/>
+                            <br />
+                            <input type="submit" class="btn btn-primary" value="Login" />
+                        </div>
+                </form>
+            </div> 
         </div>
 
 
@@ -80,8 +176,8 @@
             var $message = $('#message');
             var $chat = $('#chat');
             var $conversa = $('#conversa');
-            var $userFormArea = $('#userFormArea');
-            var $userForm = $('#userForm');
+            var $userLoginArea = $('#userLoginArea');
+            var $userLoginForm = $('#userLoginForm');
             var $users = $('#users');
             var $username = $('#username');
 
@@ -98,11 +194,11 @@
             });
             
             //Log In
-            $userForm.submit(function(e){
+            $userLoginForm.submit(function(e){
                 e.preventDefault();
                 socket.emit('new user', $username.val(),function(data){
                     if(data){
-                        $userFormArea.hide();
+                        $userLoginArea.hide();
                         $conversa.show();
                     }
                 });
@@ -117,7 +213,58 @@
             });
             
         });
-    </script>
-    
+
+
+        //tentar incluir este trecho de código no app.js
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+
+            // User is signed in.
+        
+            document.getElementById("user_div").style.display = "block";
+            document.getElementById("login_div").style.display = "none";
+        
+            var user = firebase.auth().currentUser;
+        
+            if(user != null){
+        
+                var email_id = user.email;
+                document.getElementById("user_para").innerHTML = "Welcome User : " + email_id;
+        
+            }
+        
+            } else {
+            // No user is signed in.
+            document.getElementById("user_div").style.display = "none";
+            document.getElementById("login_div").style.display = "block";
+            }
+        });
+        
+        function login(){
+            var userEmail = document.getElementById("email_field").value;
+            var userPass = document.getElementById("password_field").value;
+
+            firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+                
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        
+            window.alert("Error : " + errorMessage);
+        
+            });
+        
+        }
+        
+        function logout(){
+            firebase.auth().signOut();
+        }
+        
+
+        //tentar inclir este trecho de código no app.js
+
+
+    </script>    
 </body>
 </html>
