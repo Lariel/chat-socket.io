@@ -13,17 +13,18 @@
 
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Lariel/chatrmi/Dev/src/img/WhatsLike.png" />
 
-    <script src="/js/app.js" type="text/javascript" charset="UTF-8"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script src="/__/firebase/4.12.1/firebase-auth.js"></script>
+    <script src="/__/firebase/4.12.1/firebase-database.js"></script>
 
 </head>
 
 <body>
     <div class="container">
 
-        <!-- Auth Google -->
+        <!-- Auth Google Firebase -->
         <div id="login_div" class="main-div">
             <label>Informe seu e-mail</label>
             <input type="email" placeholder="e-mail" id="email_field" />
@@ -31,8 +32,21 @@
             <input type="password" placeholder="senha" id="password_field" />
 
             <button onclick="login()">Login</button>
+            <br />
+            <button onclick="signin()">Criar uma conta</button>
         </div>
-        <!-- Auth Google -->
+
+        <div id="signin_div" class="main-div">
+            <label>Informe seu Nickname</label>
+            <input type="nick" placeholder="nick" id="nick_field" />
+            <label>Informe seu e-mail</label>
+            <input type="email" placeholder="e-mail" id="email_field" />
+            <label>Informe sua senha</label>
+            <input type="password" placeholder="senha" id="password_field" />
+
+            <button onclick="signin()">Criar Conta</button>
+        </div>
+        <!-- Auth Google Firebase -->
 
         <!-- form de log in simples-->
         <div id="userLoginArea" class="row">

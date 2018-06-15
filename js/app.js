@@ -4,6 +4,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     document.getElementById("conversa").style.display = "block";
     document.getElementById("login_div").style.display = "none";
+    document.getElementById("signin_div").style.display = "none";
 
     var user = firebase.auth().currentUser;
 
@@ -16,12 +17,22 @@ firebase.auth().onAuthStateChanged(function(user) {
 
   } else {
     // No user is signed in.
-
-    document.getElementById("conversa").style.display = "none";
     document.getElementById("login_div").style.display = "block";
+    document.getElementById("conversa").style.display = "none";
+    document.getElementById("signin_div").style.display = "none";
 
   }
 });
+
+function signin(){
+  document.getElementById("login_div").style.display = "none";
+  document.getElementById("signin_div").style.display = "block";
+  var userNick = document.getElementById("nick_field").value;
+  var userEmail = document.getElementById("email_field").value;
+  var userPass = document.getElementById("password_field").value;
+  window.alert("olá "+userNick);
+}
+
 
 function login(){
 
