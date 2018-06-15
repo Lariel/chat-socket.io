@@ -9,7 +9,8 @@
   "author": "Lariel Negreiros dos Santos",
   "license": "ISC",
   "dependencies": {
-    "socket.io": "*",
-    "express": "*"
+    "express": "*",
+    "firebase": "^5.0.4",
+    "socket.io": "*"
   }
 }

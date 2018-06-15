@@ -1,5 +1,6 @@
 body{
-    margin-top: 250px;
+    margin-top: 25px;
+    background: #5d8ffc;
 }
 
 /*IDs*/
@@ -7,8 +8,13 @@ body{
     display: none;
 }
 
-#userFormArea{
-    display: none;
+#userLoginArea{
+  display: none;
+  width: 300px;
+  min-width: 30%; 
+  margin-top: 50px;
+  margin-left : auto;
+  margin-right : auto;
 }
 
 /* <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="UTF-8">  */
@@ -16,11 +22,11 @@ body{
 
 /*Classes*/
 .main-div, .loggedin-div {
-  width: 20%;
-  margin: 0px auto;
-  margin-top: 150px;
-  padding: 20px;
-  display: none;
+  width: 300px;
+  min-width: 30%; 
+  margin-top: 50px;
+  margin-left : auto;
+  margin-right : auto;
 }
 
 .main-div input {
