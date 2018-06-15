@@ -16,6 +16,14 @@ body{
   margin-right : auto;
 }
 
+#signup_div {
+  display: none;
+}
+
+#login_div {
+  display: none;
+}
+
 /* <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="UTF-8">  */
 
 
@@ -23,6 +31,11 @@ body{
 .container{
   margin-top: 25px;
 }
+
+.t-center {
+  text-align: center;
+}
+
 .main-div, .loggedin-div {
   width: 300px;
   min-width: 30%; 

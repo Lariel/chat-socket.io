@@ -4,7 +4,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     document.getElementById("conversa").style.display = "block";
     document.getElementById("login_div").style.display = "none";
-    document.getElementById("signin_div").style.display = "none";
+    document.getElementById("sigup_div").style.display = "none";
 
     var user = firebase.auth().currentUser;
 
@@ -19,23 +19,13 @@ firebase.auth().onAuthStateChanged(function(user) {
     // No user is signed in.
     document.getElementById("login_div").style.display = "block";
     document.getElementById("conversa").style.display = "none";
-    document.getElementById("signin_div").style.display = "none";
+    document.getElementById("sigup_div").style.display = "none";
 
   }
 });
 
-function signin(){
-  document.getElementById("login_div").style.display = "none";
-  document.getElementById("signin_div").style.display = "block";
-  var userNick = document.getElementById("nick_field").value;
-  var userEmail = document.getElementById("email_field").value;
-  var userPass = document.getElementById("password_field").value;
-  window.alert("olá "+userNick);
-}
-
 
 function login(){
-
   var userEmail = document.getElementById("email_field").value;
   var userPass = document.getElementById("password_field").value;
 
@@ -49,6 +39,22 @@ function login(){
     // ...
   });
 
+}
+
+function gosignup(){
+  document.getElementById("signup_div").style.display = "block";
+  document.getElementById("login_div").style.display = "none";
+}
+
+function signup(){
+  var novoUserNick = document.getElementById("new_nick_field").value;
+  var novoUserEmail = document.getElementById("new_email_field").value;
+  var novoUserPass = document.getElementById("new_password_field").value;
+  
+  window.alert("bem vindo, "+novoUserNick+" e-mail: "+novoUserEmail);
+
+  document.getElementById("login_div").style.display = "block";
+  document.getElementById("signup_div").style.display = "none";
 }
 
 function logout(){

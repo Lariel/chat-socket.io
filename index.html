@@ -24,7 +24,7 @@
 <body>
     <div class="container">
 
-        <!-- Auth Google Firebase -->
+        <!-- Auth Google Firebase form de login-->
         <div id="login_div" class="main-div">
             <label>Informe seu e-mail</label>
             <input type="email" placeholder="e-mail" id="email_field" />
@@ -33,38 +33,27 @@
 
             <button onclick="login()">Login</button>
             <br />
-            <button onclick="signin()">Criar uma conta</button>
-        </div>
 
-        <div id="signin_div" class="main-div">
-            <label>Informe seu Nickname</label>
-            <input type="nick" placeholder="nick" id="nick_field" />
-            <label>Informe seu e-mail</label>
-            <input type="email" placeholder="e-mail" id="email_field" />
-            <label>Informe sua senha</label>
-            <input type="password" placeholder="senha" id="password_field" />
-
-            <button onclick="signin()">Criar Conta</button>
-        </div>
-        <!-- Auth Google Firebase -->
-
-        <!-- form de log in simples-->
-        <div id="userLoginArea" class="row">
-            <div class="col-md-12">
-                <!-- bootstrap -->
-                <form id="userLoginForm">
-                    <div class="form-group">
-                        <label>Informe seu nickname</label>
-                        <input class="form-control" id="username" />
-                        <br />
-                        <label>Informe seu e-mail</label>
-                        <input class="form-control" id="useremail" />
-                        <br />
-                        <input type="submit" class="btn btn-primary" value="Login" />
-                    </div>
-                </form>
+            <div class="t-center">
+                <label>Não possui cadastro?</label>
             </div>
+            <button onclick="gosignup()">Criar Conta</button>
+            <!-- bkp: <button onclick="signin()">Criar Conta</button> -->
         </div>
+
+        <!-- Auth Google Firebase form de cadastro-->
+        <div id="signup_div" class="main-div">
+            <label>Informe seu Nickname</label>
+            <input type="nick" placeholder="nick" id="new_nick_field" />
+            <label>Informe seu e-mail</label>
+            <input type="email" placeholder="e-mail" id="new_email_field" />
+            <label>Informe sua senha</label>
+            <input type="password" placeholder="senha" id="new_password_field" />
+
+            <button onclick="signup()">Enviar</button>
+        </div>
+
+        <!-- Auth Google Firebase -->
 
         <div id="conversa" class="row">
             <!-- tela de conversa -->
@@ -105,12 +94,16 @@
     <script>
         $(function () {
             var socket = io.connect();
+
             var $messageForm = $('#messageForm');
             var $message = $('#message');
+
             var $chat = $('#chat');
             var $conversa = $('#conversa');
+
             var $userLoginArea = $('#userLoginArea');
             var $userLoginForm = $('#userLoginForm');
+
             var $users = $('#users');
             var $username = $('#username');
 
@@ -137,6 +130,7 @@
                 });
                 $username.val('');
             });
+
             socket.on('get users', function (data) {
                 var html = '';
                 for (i = 0; i < data.length; i++) {
