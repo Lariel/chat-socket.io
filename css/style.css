@@ -1,6 +1,5 @@
 body{
-    margin-top: 25px;
-    background: #5d8ffc;
+  margin-top: 25px;
 }
 
 /*IDs*/
@@ -21,6 +20,9 @@ body{
 
 
 /*Classes*/
+.container{
+  margin-top: 25px;
+}
 .main-div, .loggedin-div {
   width: 300px;
   min-width: 30%; 
