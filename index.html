@@ -1,37 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Chat Sistemas Distribuidos</title>
+
+    <title>WhatsLike</title>
+
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Lariel/chatrmi/Dev/src/img/WhatsLike.png" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
     <script src="/socket.io/socket.io.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
     <style>
         body{
             margin-top: 30px;
         }
+
+        #conversa{
+            display: none;
+        }
     </style>
 
 </head>
+
 <body>
-    <div class="container"> 
-        <div class="row">
-            <div class="col-md-4"> <!-- de 12 do bootstrap -->
+    <div class="container">
+        
+        <div id="userLoginArea" class="row">
+            <div class="col-md-12">
+                <form id="userLoginForm">
+                    <div class="form-group">
+                        <label>Informe seu nickname</label>
+                        <input class="form-control" id="username" />
+                        <br />
+                        <input type="submit" class="btn btn-primary" value="Login" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="conversa" class="row">
+            <!-- tela de conversa -->
+            <div class="col-md-4">
+                <!-- de 12 do bootstrap -->
                 <div class="well">
                     <h3>Usuários online</h3>
                     <ul class="list-group" id="users"></ul>
                 </div>
                 <div class="well">
-                        <h3>Meus contatos</h3>
-                        <ul class="list-group" id="users"></ul>
+                    <h3>Meus contatos</h3>
+                    <ul class="list-group" id="users"></ul>
+                </div>
+                <div class="well">
+                    <h3>Meus grupos</h3>
+                    <ul class="list-group" id="grupos"></ul>
                 </div>
             </div>
 
-            <div class="col-md-8"> <!-- de 12 do bootstrap -->
+            <div class="col-md-8">
+                <!-- de 12 do bootstrap -->
                 <div class="chat" id="chat"></div>
 
                 <form id="messageForm">
@@ -40,32 +71,66 @@
                         <textarea class="form-control" id="message"></textarea>
                         <br />
                         <input type="submit" class="btn btn-primary" value="Enviar Mensagem" />
+                        <br />
                     </div>
                 </form>
+                <button class="btn btn-primary main-div" onclick="logout()">Logout</button>
             </div>
         </div>
     </div>
 
     <script>
-        $(function(){
-            var socket = io.connect();
+        $(function () {
+            var socket = io.connect(); // conecta ao servidor
+
             var $messageForm = $('#messageForm');
             var $message = $('#message');
-            var $chat = $('#chat');
 
-            $messageForm.submit(function(e){
+            var $chat = $('#chat');
+            var $conversa = $('#conversa');
+
+            var $userLoginArea = $('#userLoginArea');
+            var $userLoginForm = $('#userLoginForm');
+
+            var $users = $('#users');
+            var $username = $('#username');
+
+            //envia mensagem
+            $messageForm.submit(function (e) {
                 e.preventDefault();
                 // console.log('teste ok');
                 socket.emit('send message', $message.val());
                 $message.val('');
             });
-
             //add mensagens no chat
-            socket.on('new message', function (data){
-                $chat.append('<div class="well">'+data.msg+'</div>');
+            socket.on('new message', function (data) {
+                $chat.append('<div class="well"><strong>' + data.user + '</strong>: ' + data.msg + '</div>');
             });
+
+            //Log In
+            $userLoginForm.submit(function (e) {
+                e.preventDefault();
+                socket.emit('new user', $username.val(), function (data) {
+                    if (data) {
+                        $userLoginArea.hide();
+                        $conversa.show();
+                    }
+                });
+                $username.val('');
+            });
+
+            socket.on('get users', function (data) {
+                var html = '';
+                for (i = 0; i < data.length; i++) {
+                    html += '<li class="list-group-item">' + data[i] + '</li>';
+                }
+                $users.html(html);
+            });
+
         });
+
+
     </script>
-    
 </body>
+
 </html>
