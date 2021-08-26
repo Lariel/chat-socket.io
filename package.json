@@ -1,7 +1,7 @@
 {
-  "name": "chat-sd",
+  "name": "chat-socket",
   "version": "1.0.0",
-  "description": "chat application for SD discipline",
+  "description": "chat application test with sockets",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "*",
-    "firebase": "*",
-    "firebase-admin": "*",
     "socket.io": "*"
   }
 }

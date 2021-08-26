@@ -6,14 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>WhatsLike</title>
-
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Lariel/chatrmi/Dev/src/img/WhatsLike.png" />
+    <title>Chat Socket.io</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
     <style>
         body{
@@ -46,7 +41,6 @@
         <div id="conversa" class="row">
             <!-- tela de conversa -->
             <div class="col-md-4">
-                <!-- de 12 do bootstrap -->
                 <div class="well">
                     <h3>Usuários online</h3>
                     <ul class="list-group" id="users"></ul>
@@ -54,23 +48,26 @@
             </div>
 
             <div class="col-md-8">
-                <!-- de 12 do bootstrap -->
                 <div class="chat" id="chat"></div>
 
                 <form id="messageForm">
                     <div class="form-group">
-                        <label>Digite a mensagem</label>
-                        <textarea class="form-control" id="message"></textarea>
-                        <br />
-                        <input type="submit" class="btn btn-primary" value="Enviar Mensagem" />
-                        <br />
+                        <div class="col-md-8">
+                            <label>Digite a mensagem</label>
+                            <input class="form-control" id="message"></input>
+                        </div>
+                        <div class="col-md-4">
+                            <br />
+                            <input type="submit" class="btn btn-primary" value="Enviar Mensagem" />
+                        </div>
                     </div>
                 </form>
-                <button class="btn btn-primary main-div" onclick="logout()">Logout</button>
             </div>
         </div>
     </div>
-
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    
     <script>
         $(function () {
             var socket = io.connect(); // conecta ao servidor
@@ -122,7 +119,7 @@
         });
 
 
-    </script>
+    </script>    
 </body>
 
 </html>
